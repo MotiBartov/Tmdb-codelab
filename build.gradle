@@ -43,4 +43,5 @@ ext {
     junit_version = '4.12'
     espresso_version = '3.0.0'
     constraint_layout_version = '1.0.2'
+    daggerVersion = "2.9"
 }

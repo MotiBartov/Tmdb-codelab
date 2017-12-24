@@ -20,6 +20,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
@@ -57,8 +60,14 @@ dependencies {
     // Retrofit2
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    //Dagger
+    compile "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+
 
     //Test
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$espresso_version", {

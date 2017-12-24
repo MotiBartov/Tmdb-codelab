@@ -8,13 +8,14 @@ import com.tikalk.mobileevent.mobileevent.BaseView
  */
 interface MoviesContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : BaseView {
 
         fun setLoadingIndicator(active: Boolean)
+        fun showViewReady()
     }
-
     interface Presenter : BasePresenter {
 
+        fun setView(view : View)
         fun loadMovies(forceUpdate: Boolean)
     }
 }
