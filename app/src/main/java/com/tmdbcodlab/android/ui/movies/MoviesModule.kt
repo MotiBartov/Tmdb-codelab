@@ -37,4 +37,8 @@ class MoviesModule{
     }
 
 
+    @Provides
+    fun provideMoviesAdapter() : MoviesAdapter{
+        return MoviesAdapter()
+    }
 }

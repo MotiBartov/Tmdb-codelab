@@ -45,6 +45,7 @@ class MoviesPresenter(val repository: TmdbRepository): MoviesContract.Presenter 
 
                     override fun onNext(t: List<Movie>) {
                         Timber.d("Got a movie")
+                        moviesView.showMovies(t)
                     }
 
                     override fun onError(e: Throwable) {
