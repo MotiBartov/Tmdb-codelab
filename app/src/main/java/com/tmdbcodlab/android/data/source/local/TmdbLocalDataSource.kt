@@ -2,26 +2,29 @@ package com.tmdbcodlab.android.data.source.local
 
 import com.tmdbcodlab.android.data.source.TmdbDataSource
 import com.tmdbcodlab.android.io.Movie
-import io.reactivex.Observable
+import io.reactivex.Flowable
 
 /**
  * Created by ronelg on 12/19/17.
  */
-class TmdbLocalDataSource: TmdbDataSource {
-    override fun saveMovies(movies: List<String>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+class TmdbLocalDataSource(val dao: MoviesDao): TmdbDataSource {
+
+    override fun getMovies(): Flowable<List<Movie>> {
+        return dao.getAllMovies()
     }
 
-    override fun saveMovie(movie: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun insertMovies(movies: List<Movie>) {
+        dao.insertMovies(movies)
     }
 
-    override fun getMovie(id: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun insertMovie(movie: Movie) {
+        dao.insertMovie(movie)
+    }
+
+    override fun getMovie(id: Int) : Movie{
+        return dao.getMovieById(id)
     }
 
 
-    override fun getMovies() : Observable<List<Movie>?>{
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 }

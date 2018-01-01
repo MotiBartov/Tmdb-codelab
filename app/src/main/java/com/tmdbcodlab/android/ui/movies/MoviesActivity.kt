@@ -2,6 +2,7 @@ package com.tmdbcodlab.android.ui.movies
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -34,7 +35,7 @@ class MoviesActivity : AppCompatActivity(), MoviesContract.View{
         Log.i(TAG, "onCreate:")
         setContentView(R.layout.activity_main)
         (application as MyApplication).component.injectMovies(this)
-        rvMovies.layoutManager = LinearLayoutManager(this)
+        rvMovies.layoutManager = GridLayoutManager(this, 3)
         rvMovies.adapter = adapter
     }
 

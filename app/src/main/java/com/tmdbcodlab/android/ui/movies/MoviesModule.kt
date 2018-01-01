@@ -2,6 +2,7 @@ package com.tmdbcodlab.android.ui.movies
 
 import com.tmdbcodlab.android.api.TmdbService
 import com.tmdbcodlab.android.data.TmdbRepository
+import com.tmdbcodlab.android.data.source.local.MoviesDao
 import com.tmdbcodlab.android.data.source.local.TmdbLocalDataSource
 import com.tmdbcodlab.android.data.source.remote.TmdbRemoteDataSource
 import dagger.Module
@@ -32,8 +33,8 @@ class MoviesModule{
     }
 
     @Provides
-    fun provideLocalDataSource() : TmdbLocalDataSource{
-        return TmdbLocalDataSource()
+    fun provideLocalDataSource(dao: MoviesDao) : TmdbLocalDataSource{
+        return TmdbLocalDataSource(dao)
     }
 
 
