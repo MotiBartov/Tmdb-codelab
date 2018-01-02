@@ -8,6 +8,7 @@ import com.tmdbcodlab.android.io.Movie
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.functions.Function
+import timber.log.Timber
 
 /**
  * Created by ronelg on 12/19/17.
@@ -27,10 +28,9 @@ class TmdbRemoteDataSource (val apiService: TmdbService): TmdbDataSource {
     }
 
     override fun getMovies(): Flowable<List<Movie>> {
-        return apiService.getTopRated().concatMap(object : Function<ApiResponse, Flowable<List<Movie>>>{
-            override fun apply(t: ApiResponse): Flowable<List<Movie>> {
-                return Flowable.just(t.results)
-            }
-        })
+        Timber.d("getMovies was called")
+        return apiService.getTopRated().concatMap { t ->
+            Flowable.just(t.results)
+        }
     }
 }

@@ -36,27 +36,31 @@ class TmdbRepository(val remoteDataSource: TmdbRemoteDataSource, val localDataSo
     }
 
     fun loadMoviesFromLocal(): Flowable<List<Movie>> {
-        Timber.d("About get movies from local datasource")
-        return localDataSource.getMovies().doOnNext { t ->
-            Timber.d("loadMoviesFromLocal: doOnNext list size ${t.size}")
-            cache.clear()
-            cache.addAll(t)
-        }.switchIfEmpty(loadMoviesFromRemote())
+        Timber.d("Prepare flowable from local datasource")
+        return localDataSource.getMovies().flatMap{it -> Flowable.fromIterable(it)}
+                .doOnNext{
+                    m ->
+                    Timber.d("loadMoviesFromLocal doOnNext")
+                    cache.add(m)
+                }.
+                toList().
+                toFlowable().
+                filter{list ->
+                    Timber.d("filter: ${list.isEmpty()}")
+                    !list.isEmpty()
+                }
+                .switchIfEmpty(loadMoviesFromRemote())
     }
 
     fun loadMoviesFromRemote(): Flowable<List<Movie>> {
-        Timber.d("It seems that the database is empty or out of date,About get movies from remote")
-
-       return remoteDataSource.getMovies().doOnNext { t ->
-               Timber.d("loadMoviesFromRemote: doOnNext")
-               localDataSource.dao.insertMovies(t)
-               cache.clear()
-               cache.addAll(t)
-
-       }
+        Timber.d("Prepare the flowable from remote datasource")
+        return remoteDataSource.getMovies().doOnNext { t ->
+            Timber.d("It seems that the database is empty or out of date,\nAbout get movies from remote")
+            Timber.d("loadMoviesFromRemote: doOnNext")
+            localDataSource.dao.insertMovies(t)
+            cache.clear()
+            cache.addAll(t)
+        }
     }
-
-
-
 
 }
