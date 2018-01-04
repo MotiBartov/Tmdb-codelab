@@ -2,12 +2,9 @@ package com.tmdbcodlab.android.data.source.remote
 
 import com.tmdbcodlab.android.api.TmdbService
 import com.tmdbcodlab.android.data.source.TmdbDataSource
-import com.tmdbcodlab.android.data.source.local.MoviesDao
-import com.tmdbcodlab.android.io.ApiResponse
 import com.tmdbcodlab.android.io.Movie
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.functions.Function
+import io.reactivex.Flowable.*
 import timber.log.Timber
 
 /**
@@ -28,9 +25,9 @@ class TmdbRemoteDataSource (val apiService: TmdbService): TmdbDataSource {
     }
 
     override fun getMovies(): Flowable<List<Movie>> {
-        Timber.d("getMovies was called")
-        return apiService.getTopRated().concatMap { t ->
-            Flowable.just(t.results)
+        Timber.d("get f1 from remote")
+        return apiService.getTopRated().map {
+            it -> it.results
         }
     }
 }

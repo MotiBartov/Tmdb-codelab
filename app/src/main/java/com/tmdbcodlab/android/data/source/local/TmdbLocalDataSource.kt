@@ -8,10 +8,10 @@ import timber.log.Timber
 /**
  * Created by ronelg on 12/19/17.
  */
-class TmdbLocalDataSource(val dao: MoviesDao): TmdbDataSource {
+class TmdbLocalDataSource(val dao: MoviesDao) : TmdbDataSource {
 
     override fun getMovies(): Flowable<List<Movie>> {
-        Timber.d("getMovies was called")
+        Timber.d("get f1 from database")
         return dao.getAllMovies()
     }
 
@@ -23,11 +23,10 @@ class TmdbLocalDataSource(val dao: MoviesDao): TmdbDataSource {
         dao.insertMovie(movie)
     }
 
-    override fun getMovie(id: Int) : Movie{
+    override fun getMovie(id: Int): Movie {
         Timber.d("getMovie was called")
         return dao.getMovieById(id)
     }
-
 
 
 }
