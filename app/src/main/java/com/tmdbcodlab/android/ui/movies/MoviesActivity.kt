@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class MoviesActivity : AppCompatActivity(), MoviesContract.View{
+class MoviesActivity : AppCompatActivity(),
+        MoviesContract.View, MoviesAdapter.AdapterClickListener{
+
 
 
     companion object {
@@ -35,6 +37,7 @@ class MoviesActivity : AppCompatActivity(), MoviesContract.View{
         Log.i(TAG, "onCreate:")
         setContentView(R.layout.activity_main)
         (application as MyApplication).component.injectMovies(this)
+        adapter.setAdapterListener(this)
         rvMovies.layoutManager = GridLayoutManager(this, 3)
         rvMovies.adapter = adapter
     }
@@ -51,5 +54,9 @@ class MoviesActivity : AppCompatActivity(), MoviesContract.View{
 
     override fun showMovies(movies: List<Movie>) {
         adapter.updateMovies(movies)
+    }
+
+    override fun onItemClicked(id: Int?) {
+        Timber.d("Movie: $id clicked")
     }
 }

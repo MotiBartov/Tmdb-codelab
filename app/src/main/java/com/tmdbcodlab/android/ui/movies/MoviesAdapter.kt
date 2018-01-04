@@ -19,10 +19,22 @@ import java.net.URI
  */
 class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
-     var movies = ArrayList<Movie>()
+    var movies = ArrayList<Movie>()
+
+    var adapterClickListener: AdapterClickListener? = null
+
+
+    fun setAdapterListener(listener: AdapterClickListener){
+        adapterClickListener = listener
+    }
 
     override fun onBindViewHolder(holder: MoviesViewHolder?, position: Int) {
         holder?.bind(movies[position].posterPath)
+        holder?.view?.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(p0: View?) {
+                adapterClickListener?.onItemClicked(movies[position].id)
+            }
+        })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
@@ -47,11 +59,12 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     }
 
     class MoviesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
         fun bind(imageUrl: String?){
-
             Glide.with(view.context).load(IMAGES_URL + imageUrl).into(view.ivMovieImage)
         }
+    }
 
+    interface AdapterClickListener{
+        fun onItemClicked(id: Int?)
     }
 }
