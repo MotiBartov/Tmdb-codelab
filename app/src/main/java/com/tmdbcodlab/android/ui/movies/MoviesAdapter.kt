@@ -29,7 +29,7 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolder?, position: Int) {
-        holder?.bind(movies[position].posterPath)
+        holder?.bind(movies[position])
         holder?.view?.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {
                 adapterClickListener?.onItemClicked(movies[position].id)
@@ -59,8 +59,10 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     }
 
     class MoviesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(imageUrl: String?){
-            Glide.with(view.context).load(IMAGES_URL + imageUrl).into(view.ivMovieImage)
+        fun bind(movie: Movie){
+            Glide.with(view.context).load(IMAGES_URL + movie.posterPath).into(view.ivMovieImage)
+            view.tvTitle.text = movie.title
+            view.tvYear.text = movie.releaseDate
         }
     }
 

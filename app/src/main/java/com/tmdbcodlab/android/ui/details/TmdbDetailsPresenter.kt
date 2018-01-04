@@ -23,9 +23,13 @@ class TmdbDetailsPresenter(val repository: TmdbRepository) : DetailsContract.Pre
     }
 
     override fun loadMovie(id: Int) {
+        Timber.d("About to load movie $id")
         repository.getMovie(id)
                 .observeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(({m -> detailsView.showMovie(m)}),({e -> Timber.e(e)}))
+                .subscribe(({m ->
+                    detailsView.showMovie(m)
+                    Timber.d("onNext: $m")
+                }),({e -> Timber.e(e)}))
     }
 }

@@ -4,7 +4,6 @@ import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import com.tmdbcodlab.android.io.Movie
 import io.reactivex.Flowable
-import io.reactivex.Observable
 
 /**
  * Created by motibartov on 01/01/2018.

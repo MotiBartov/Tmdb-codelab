@@ -1,15 +1,14 @@
 package com.tmdbcodlab.android.ui.movies
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.widget.Toast
 import com.tmdbcodlab.android.MyApplication
 import com.tmdbcodlab.android.R
 import com.tmdbcodlab.android.io.Movie
+import com.tmdbcodlab.android.ui.details.TmdbDetailsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,7 +19,7 @@ class MoviesActivity : AppCompatActivity(),
 
 
     companion object {
-        val TAG = "TAG_MoviesActivity"
+        val INTENT_EXTREA = "movie_id"
     }
     @Inject
     lateinit var presenter: MoviesContract.Presenter
@@ -34,11 +33,10 @@ class MoviesActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i(TAG, "onCreate:")
         setContentView(R.layout.activity_main)
         (application as MyApplication).component.injectMovies(this)
         adapter.setAdapterListener(this)
-        rvMovies.layoutManager = GridLayoutManager(this, 3)
+        rvMovies.layoutManager = GridLayoutManager(this, 2)
         rvMovies.adapter = adapter
     }
 
@@ -58,5 +56,8 @@ class MoviesActivity : AppCompatActivity(),
 
     override fun onItemClicked(id: Int?) {
         Timber.d("Movie: $id clicked")
+        val intent = Intent(this, TmdbDetailsActivity::class.java)
+        intent.putExtra(INTENT_EXTREA, id)
+        startActivity(intent)
     }
 }

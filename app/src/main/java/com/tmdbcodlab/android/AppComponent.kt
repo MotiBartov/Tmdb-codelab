@@ -2,7 +2,7 @@ package com.tmdbcodlab.android
 
 import com.tmdbcodlab.android.api.ApiModule
 import com.tmdbcodlab.android.data.source.local.RoomModule
-import com.tmdbcodlab.android.ui.details.DetailsActivty
+import com.tmdbcodlab.android.ui.details.TmdbDetailsActivity
 import com.tmdbcodlab.android.ui.details.DetailsModule
 import com.tmdbcodlab.android.ui.movies.MoviesActivity
 import com.tmdbcodlab.android.ui.movies.MoviesModule
@@ -18,7 +18,7 @@ interface AppComponent{
 
 
     fun injectMovies(target: MoviesActivity)
-    fun injectDetails(target: DetailsActivty)
+    fun injectDetails(target: TmdbDetailsActivity)
 
 
 }
