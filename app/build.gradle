@@ -55,6 +55,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     //rxPermissions
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 
     // Retrofit2
@@ -76,7 +77,6 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$rootProject.ext.roomVersion"
     implementation "android.arch.persistence.room:rxjava2:$rootProject.ext.roomVersion"
     kapt "android.arch.persistence.room:compiler:$rootProject.roomVersion"
-
 
     //Test
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$espresso_version", {

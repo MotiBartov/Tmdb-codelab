@@ -20,7 +20,7 @@ class TmdbRemoteDataSource (val apiService: TmdbService): TmdbDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getMovie(id: Int) : Movie{
+    override fun getMovie(id: Int) : Flowable<Movie>{
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

@@ -11,5 +11,5 @@ interface TmdbDataSource {
     fun insertMovies(movies : List<Movie>)
     fun insertMovie(movie: Movie)
     fun getMovies() : Flowable<List<Movie>>
-    fun getMovie(id: Int) : Movie
+    fun getMovie(id: Int) : Flowable<Movie>
 }

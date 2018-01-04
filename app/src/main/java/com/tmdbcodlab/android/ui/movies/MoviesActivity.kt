@@ -41,7 +41,7 @@ class MoviesActivity : AppCompatActivity(), MoviesContract.View{
 
     override fun onResume() {
         super.onResume()
-        presenter.setView(this)
+        presenter.subscribe(this)
         presenter.loadMovies(true)
     }
 

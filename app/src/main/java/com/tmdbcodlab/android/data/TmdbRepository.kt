@@ -13,6 +13,7 @@ import timber.log.Timber
 class TmdbRepository(val remoteDataSource: TmdbRemoteDataSource, val localDataSource: TmdbLocalDataSource) : TmdbDataSource {
 
     val cache: ArrayList<Movie> = ArrayList()
+    var movieCache : Movie? = null
 
     override fun insertMovies(movies: List<Movie>) {
         throw UnsupportedOperationException("Unsupported operation")
@@ -32,8 +33,12 @@ class TmdbRepository(val remoteDataSource: TmdbRemoteDataSource, val localDataSo
         }
     }
 
-    override fun getMovie(id: Int): Movie {
-        throw UnsupportedOperationException("Unsupported operation")
+    override fun getMovie(id: Int): Flowable<Movie> {
+        return if(movieCache == null){
+             localDataSource.getMovie(id)
+        }else{
+             Flowable.just(movieCache)
+        }
     }
 
     fun loadMoviesFromLocal(): Flowable<List<Movie>> {

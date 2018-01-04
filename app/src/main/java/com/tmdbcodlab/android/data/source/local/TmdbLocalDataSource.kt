@@ -23,7 +23,7 @@ class TmdbLocalDataSource(val dao: MoviesDao) : TmdbDataSource {
         dao.insertMovie(movie)
     }
 
-    override fun getMovie(id: Int): Movie {
+    override fun getMovie(id: Int): Flowable<Movie> {
         Timber.d("getMovie was called")
         return dao.getMovieById(id)
     }

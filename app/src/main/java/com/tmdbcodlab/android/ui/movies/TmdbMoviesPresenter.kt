@@ -1,6 +1,7 @@
 package com.tmdbcodlab.android.ui.movies
 
 import com.bumptech.glide.Glide.init
+import com.tikalk.mobileevent.mobileevent.BaseView
 import com.tmdbcodlab.android.data.TmdbRepository
 import com.tmdbcodlab.android.io.Movie
 import io.reactivex.Flowable
@@ -23,12 +24,8 @@ class TmdbMoviesPresenter(val repository: TmdbRepository) : MoviesContract.Prese
     val compositeDisposal = CompositeDisposable()
 
 
-    override fun setView(view: MoviesContract.View) {
-        this.moviesView = view
-        this.moviesView.showViewReady()
-    }
-
-    override fun subscribe() {
+    override fun subscribe(view : BaseView) {
+        this.moviesView = view as MoviesContract.View
     }
 
     override fun unsubscribe() {
@@ -36,29 +33,6 @@ class TmdbMoviesPresenter(val repository: TmdbRepository) : MoviesContract.Prese
 
     override fun loadMovies(forceUpdate: Boolean) {
         Timber.d("About to load movies")
-
-//         repository.getMovies().subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(object : FlowableSubscriber<List<Movie>>{
-//                    override fun onSubscribe(s: Subscription) {
-//                        Timber.d("onSubscribe")
-//                        s.request(Long.MAX_VALUE)
-//                    }
-//
-//                    override fun onNext(t: List<Movie>) {
-//                        Timber.d("onNext")
-//                        moviesView.showMovies(t)
-//                    }
-//
-//                    override fun onComplete() {
-//                        Timber.d("onComplete")
-//                    }
-//
-//                    override fun onError(t: Throwable?) {
-//                        Timber.d("onError")
-//                    }
-//
-//                })
 
 
         val subscribe: Disposable = repository.getMovies().subscribeOn(Schedulers.io())

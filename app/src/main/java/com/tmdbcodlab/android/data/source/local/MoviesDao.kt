@@ -22,7 +22,7 @@ interface MoviesDao {
     fun getAllMovies() : Flowable<List<Movie>>
 
     @Query("SELECT * FROM movies WHERE id = :arg0")
-    fun getMovieById(id : Int) : Movie
+    fun getMovieById(id : Int) : Flowable<Movie>
 
     @Update(onConflict = REPLACE)
     fun updateMovie(movie: Movie)

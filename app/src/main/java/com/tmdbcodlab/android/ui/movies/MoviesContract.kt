@@ -16,8 +16,6 @@ interface MoviesContract {
         fun showViewReady()
     }
     interface Presenter : BasePresenter {
-
-        fun setView(view : View)
         fun loadMovies(forceUpdate: Boolean)
     }
 }
