@@ -24,11 +24,11 @@ class TmdbMoviesPresenter(val repository: TmdbRepository) : MoviesContract.Prese
     val compositeDisposal = CompositeDisposable()
 
 
-    override fun subscribe(view : BaseView) {
+    override fun attach(view : BaseView) {
         this.moviesView = view as MoviesContract.View
     }
 
-    override fun unsubscribe() {
+    override fun detach() {
     }
 
     override fun loadMovies(forceUpdate: Boolean) {

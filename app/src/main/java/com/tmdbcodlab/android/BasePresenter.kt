@@ -2,8 +2,8 @@ package com.tikalk.mobileevent.mobileevent
 
 interface BasePresenter {
 
-    fun subscribe(view: BaseView)
+    fun attach(view: BaseView)
 
-    fun unsubscribe()
+    fun detach()
 
 }

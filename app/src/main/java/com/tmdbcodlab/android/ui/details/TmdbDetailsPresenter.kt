@@ -13,22 +13,23 @@ import timber.log.Timber
 class TmdbDetailsPresenter(val repository: TmdbRepository) : DetailsContract.Presenter {
 
 
-    lateinit var detailsView: DetailsContract.View
+    var detailsView: DetailsContract.View? = null
 
-    override fun subscribe(view : BaseView) {
+    override fun attach(view : BaseView) {
         detailsView = view as DetailsContract.View
     }
 
-    override fun unsubscribe() {
+    override fun detach() {
+        detailsView = null
     }
 
     override fun loadMovie(id: Int) {
         Timber.d("About to load movie $id")
         repository.getMovie(id)
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(({m ->
-                    detailsView.showMovie(m)
+                    detailsView?.showMovie(m)
                     Timber.d("onNext: $m")
                 }),({e -> Timber.e(e)}))
     }

@@ -60,7 +60,7 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     class MoviesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movie: Movie){
-            Glide.with(view.context).load(IMAGES_URL + movie.posterPath).into(view.ivMovieImage)
+            Glide.with(view.context).load(IMAGES_URL + "/"+ movie.posterPath).into(view.ivMovieImage)
             view.tvTitle.text = movie.title
             view.tvYear.text = movie.releaseDate
         }

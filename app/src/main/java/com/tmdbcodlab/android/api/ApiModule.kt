@@ -19,7 +19,7 @@ class ApiModule{
 
     companion object {
         val BASE_URL = "http://api.themoviedb.org/3/movie/"
-        val IMAGES_URL = "https://image.tmdb.org/t/p/w500/"
+        val IMAGES_URL = "https://image.tmdb.org/t/p/w500"
         val IMAGES_ENDPOINT = "images"
         val KEY = "b331218ddcbd128634135abf7673fab5"
     }

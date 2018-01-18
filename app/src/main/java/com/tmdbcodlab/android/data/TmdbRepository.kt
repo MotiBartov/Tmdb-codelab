@@ -14,6 +14,7 @@ class TmdbRepository(val remoteDataSource: TmdbRemoteDataSource, val localDataSo
 
     val cache: ArrayList<Movie> = ArrayList()
     var movieCache: Movie? = null
+    var movieId : Int = 0
 
     override fun insertMovies(movies: List<Movie>) {
         throw UnsupportedOperationException("Unsupported operation")
@@ -28,22 +29,28 @@ class TmdbRepository(val remoteDataSource: TmdbRemoteDataSource, val localDataSo
             Timber.d("getMovies: load from cache")
             Flowable.just(cache)
         } else {
-            loadMoviesFromLocal()
-//            loadMoviesFromRemote()
+            loadMoviesFromDataSource()
         }
     }
 
     override fun getMovie(id: Int): Flowable<Movie> {
-        return if (movieCache == null) {
-            Timber.d("About to load movie $id from database")
-            localDataSource.getMovie(id).take(1).doOnNext{Timber.d("getMovie doOnNext")}
-        } else {
+
+        return if (movieCache != null && movieId == id) {
             Timber.d("Get movie from cache")
             Flowable.just(movieCache)
+        } else {
+            Timber.d("About to load movie $id from database")
+            localDataSource.getMovie(id).take(1).doOnNext{movie ->
+                movieCache = movie
+            }
         }
     }
 
-    fun loadMoviesFromLocal(): Flowable<List<Movie>> {
+    private fun loadMoviesFromDataSource(): Flowable<List<Movie>> {
+        return loadMoviesFromLocal().switchIfEmpty(loadMoviesFromRemote())
+    }
+
+    private fun loadMoviesFromLocal(): Flowable<List<Movie>> {
         Timber.d("Prepare f1 from local datasource")
         return localDataSource.getMovies().
                 take(1)
@@ -55,10 +62,9 @@ class TmdbRepository(val remoteDataSource: TmdbRemoteDataSource, val localDataSo
                 .toList()
                 .toFlowable()
                 .filter { l -> !l.isEmpty() }
-                .switchIfEmpty(loadMoviesFromRemote())
     }
 
-    fun loadMoviesFromRemote(): Flowable<List<Movie>> {
+    private fun loadMoviesFromRemote(): Flowable<List<Movie>> {
         Timber.d("Prepare the f1 from remote datasource")
         return remoteDataSource.getMovies().doOnNext { list ->
             Timber.d("doOnNext Remote")

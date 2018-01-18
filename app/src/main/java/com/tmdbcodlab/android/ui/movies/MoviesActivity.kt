@@ -42,7 +42,7 @@ class MoviesActivity : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
-        presenter.subscribe(this)
+        presenter.attach(this)
         presenter.loadMovies(true)
     }
 
